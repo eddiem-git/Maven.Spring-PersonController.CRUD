@@ -2,6 +2,7 @@ package io.zipcoder.crudapp.service;
 
 import io.zipcoder.crudapp.model.Person;
 import io.zipcoder.crudapp.repository.PersonRepository;
+import org.graalvm.compiler.nodes.calc.PointerEqualsNode;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +18,22 @@ public class PersonService {
     }
 
     public Person show(Long id) {
-        return null;
+        return repository.findOne(id);
+    }
+
+    public Person create(Person person){
+        return repository.save(person);
+    }
+
+    public Person update(Long id, Person newPersonData){
+        Person originalPerson = repository.findOne(id);
+        originalPerson.setFirstName(newPersonData.getFirstName());
+        originalPerson.setLastName(newPersonData.getLastName());
+        return repository.save(originalPerson);
+    }
+
+    public Boolean delete(Long id){
+        repository.delete(id);
+        return true;
     }
 }
